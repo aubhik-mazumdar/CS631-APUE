@@ -1,6 +1,7 @@
 FIRST WEEK NOTES -*- mode:org -*-
 ** FIRST WEEK NOTES
 
+
 * /dev/null can be used to suppress output if we do not want to see it on stdout
 ** stdin -0, stdout-1, stderr - 2
 ** Thats when you use the syntax ./blah > /dev/null 2>&1
