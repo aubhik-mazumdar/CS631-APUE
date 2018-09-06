@@ -13,7 +13,3 @@ FIRST WEEK NOTES -*- mode:org -*-
 - [ ] Look for group partners. Ramana?
 
 
-
-#+BEGIN_SRC python
-
-#+END_SRC
