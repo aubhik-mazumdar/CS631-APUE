@@ -62,6 +62,7 @@ READING- CHAPTER 1 (Stevens)
 
 * The Linux kernel is used in the GNU Operating System
 * the etc/passwd file stores the credentials for users on the system
+
 SNAPSHOT OF NETBSD
 root:*:0:0:Charlie &:/root:/bin/sh
 toor:*:0:0:Bourne-again Superuser:/root:/bin/sh
