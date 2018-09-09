@@ -93,3 +93,114 @@ aubhikcr7:*:1000:100::/home/aubhikcr7:/bin/sh
 
 * SHELLS
 bourne shell - /bin/sh used on all systems
+
+
+
+CHAPTER 3- FILE I/O
+
+->Basic operations of file I/O are implemented using only 5 functions
+1. Open
+2. Read
+3. Lseek
+4. Write
+5. Close
+
+* Unbuffered I/O - Each function invokes a system call instead of being placed on a buffer, waiting for the right time to execute.
+* File descriptors are used by the Kernel to reference files, which is just a non-negative integer.
+
+OPEN returns FileDescriptor usedby READ, WRITE
+
+STDIN=0, STDOUT=1, STDERR=2 **UNIX convention**
+
+In /usr/include/unistd.h
+===========================================================================
+/*
+ * IEEE Std 1003.1-90
+ */
+#define STDIN_FILENO    0       /* standard input file descriptor */
+#define STDOUT_FILENO   1       /* standard output file descriptor */
+#define STDERR_FILENO   2       /* standard error file descriptor */
+
+==========================================================================
+
+The maximum number of open files was initially 19 in UNIX systems, 63 in later versions. After checking fcntl.h in /usr/include, the F_MAXFD variable is 11. (Ask Professor)
+
+==========================================================================
+
+#define F_MAXFD         11              /* return the max open fd */
+
+==========================================================================
+
+FLAGS (OPTIONAL AND MANDATORY)
+
+* The O_SYNC and O_DSYNC flags instruct the operation to wait for completion of physical I/O. There is a slight difference in these flags. In O_SYNC the file attributes are also updated synchronously whereas the O_DSYNC flags instructs the operation to not wait for file attributes to be updated if they don't affect the ability to read the written data
+
+* Interestingly since the lowest unused number is used as the file descriptor, a program may occasionally reassign STDOUT (1) as a file descriptor
+
+
+TOCTTOU- Time of check to time of use error
+This error occurs when 2 file-based finction calls are made and the second call depends on the result of the first call. Because the 2 calls are not atomic, the second call may operate on the file before the first file has finished thus leading to an incorrect operation or worse, termination due to error.
+
+
+ FILE FUNCTIONS
+
+creat - deprecated. Was used earlier to create an empty file and return a file descriptor to the file with ONLY WRITE ACCESS!
+==========================================================================
+#include <fcntl.h>
+int creat(const char *path, mode_t mode);
+==========================================================================
+
+
+It is equivalent to the open function
+==========================================================================
+#include<unistd.h>
+
+open(path, O_RDWR | O_CREAT | O_TRUNC, mode);
+
+/*Additionally creates and opens a file for reading and writing */
+==========================================================================
+
+
+CLOSE
+==========================================================================
+#include<unistd.h>
+int close(int fd);
+==========================================================================
+If the program terminates, all open file descriptors are closed automatically. THis is OK for unbuffered operations as the OS will close all the open files but for a buffered operation, the data will still lie somewhere in memory.
+
+
+LSEEK
+
+Each file initially sets its currect-file-offset to 0 and increments it as the file is read.
+For setting the offset manually, the LSEEK function is used-
+==========================================================================
+#include <unistd.h>
+off_t lseek(int fd, off_t offset, int whence);
+==========================================================================
+
+whence can be-
+1. SEEK_SET- offset set to offset bytes (2nd parameter) from the beginning of the file
+2. SEEK_CUR- offset is set to currect_value+offset (-ve or +ve)
+3. SEEK_END- offset is set to size of file + offset (-ve or +ve)
+
+To test if a file has the ability to seek, we determine the current offset and if it returns a valid value (not an error ESPIPE or -1) it is seekable.
+
+==========================================================================
+#include "apue.h"
+int
+main(void)
+{
+if (lseek(STDIN_FILENO, 0, SEEK_CUR) == -1)
+   printf("cannot seek\n");
+
+else
+   printf("seek OK\n");
+
+exit(0);
+}
+
+==========================================================================
+
+You can also create holes in a file using lseek by passing a higher offset than the file size. The holes will be read back as 0s.
+
+
