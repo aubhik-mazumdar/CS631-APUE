@@ -33,6 +33,8 @@ ptyfs                 2          2          0 100% /dev/pts
 procfs                8          8          0 100% /proc
 tmpfs            524056          0     524056   0% /var/shm
 
+
+
 INTERESTING FILES
 
 /etc/protocols
@@ -51,6 +53,8 @@ Cached:       63148 kB
 SwapTotal:        0 kB
 SwapFree:         0 kB
 
+
+AFter reading further, memory allocation in UNIX is done by Slab allocation. The buddy algorithm was used but not anymore. (Ask professor to elaborate)
 /sbin and /usr/sbin
 
 by executing a diff+grep search between the 2 directories, I found that the following files are only in /usr/bin
@@ -204,3 +208,21 @@ exit(0);
 You can also create holes in a file using lseek by passing a higher offset than the file size. The holes will be read back as 0s.
 
 
+READ COMMAND
+
+
+==========================================================================
+#include <unistd.h>
+ssize_t read(int fd, void *buf, size_t nbytes);
+==========================================================================
+
+returns the number of bytes read or 0 if EOF or -1 if error
+
+WRITE FUNCTION
+
+==========================================================================
+#include <unistd.h>
+ssize_t write(int fd, const void *buf, size_t nbytes);
+==========================================================================
+
+Returns the number of bytes written, else -1 on error
