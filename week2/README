@@ -1,0 +1,54 @@
+#HW1: trivially copy a file
+
+The program copies a file from a source_path to a destination_path based on what is provided in the command line arguments.
+
+STEP 1: run 'make'
+STEP 2: run the program ./tcp
+
+usage: tcp source_path destination_path
+
+example: tcp /etc/passwd file2
+	 tcp ../hw1.txt .
+
+
+Possible source & destination paths are
+
+- Directory
+- Filepath
+- Symbolic link
+- Hard link
+
+The permissions of the written file are identical to those of the read file. Important functions used are
+- stat(2)
+- open(2)
+- read(2)
+- write(2)
+- close(2)
+
+Using the time program, I chose the best BUFFERSIZE.
+
+time ./testcp.sh -p ./tcp
+
+OUTPUTS-
+WITH BUFFSIZE 16384
+ All 25 tests passed.
+       99.95 real         3.52 user        71.60 sys
+
+WITH BUFFSIZE 32678- BEST
+All 25 tests passed.
+       95.92 real         2.85 user        69.84 sys
+
+      
+WITH BUFFSIZE 65536
+All 25 tests passed.
+       96.39 real         3.24 user        69.48 sys
+
+
+I determined that the best BUFFERSIZE was 32678.
+
+A few checks that I had to do were
+- Check if same source and destination file, in which case do not copy and return ERROR
+- If directory is provided, create new file with same permissions as source file
+- Handle symlinks and hardlinks
+- Truncate a file first to avoid any differences in source and destination files
+
