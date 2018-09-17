@@ -1,0 +1,35 @@
+
+CS631 -- Advanced Programming in the UNIX Environment - HW#1
+HW#1: trivially copy a file
+Summary
+The objective of this assignment is for you to write your first program and get comfortable developing a tool from a given specification.
+
+Problem assignment
+Write a simple program to copy a file following the specification in this manual page. For an extra 10 points, also implement the tcpm(1) tool. Your program will:
+
+follow the general homework guidelines
+be written in C (not C++ or anything else)
+not generate any output other than error messages when appropriate
+be accompanied by a Makefile, README, and checklist
+Testing functionality
+You can test the functionality of your program using this script. Please note that passing all tests there is necessary, but not sufficient for a good grade. As explained in class, code quality and cleanliness will factor into your grade.
+
+Deliverables and Due Date
+You will submit a single tar archive named username-hw2.tar that will extract into a directory named after your username. In that directory will be the files tcp.c, Makefile, README, and checklist.
+
+For example, I would create my submission like this:
+
+
+$ whoami
+jschauma
+$ mkdir jschauma
+$ cd jschauma
+$ vi tcp.c
+$ vi Makefile
+$ vi README
+$ vi checklist
+$ cd ..
+$ tar zcf jschauma-hw1.tar jschauma
+The due date for this assignment is 2018-09-17 16:00:00 EDT. Please attach the file to an email sent from your @stevens.edu email address to jschauma@stevens.edu with a subject of "[CS631] HW1".
+
+[Course Website]

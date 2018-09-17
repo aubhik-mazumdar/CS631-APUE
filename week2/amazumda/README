@@ -1,5 +1,8 @@
 #HW1: trivially copy a file
 
+
+tcp.c
+
 The program copies a file from a source_path to a destination_path based on what is provided in the command line arguments.
 
 STEP 1: run 'make'
@@ -51,4 +54,29 @@ A few checks that I had to do were
 - If directory is provided, create new file with same permissions as source file
 - Handle symlinks and hardlinks
 - Truncate a file first to avoid any differences in source and destination files
+
+
+tcpm.c
+
+The program copies a file from a source_path to a destination_path based on what is provided in the command line arguments using memory maps.
+
+STEP 1: run 'make'
+STEP 2: run the program './tcpm'
+
+usage: tcpm source_path destination_path
+
+example: tcpm /etc/passwd file
+	 tcpm zero .
+
+Additional functions used in this program other than the ones already specified are
+- mmap(2)
+- memcpy(3)
+- munmap(2)
+- ftruncate(2)
+
+A major difference between the 2 versions is the use of ftruncate in the 2nd version. Without the truncate, a memory map of size 'filesize' was trying to be copied to a map of size 0 (write file with length 0) which was leading to segmentation fault. The ftruncate would extend the write file size to 'filesize' and zero-fill it to prepare it for memory mapping.
+
+Also, memory has to be explicitly unmapped as the system does not do it for you (like closing of files). The munmap function was used for this.
+
+
 
