@@ -1,0 +1,73 @@
+CHAPTER 4-FILES AND DIRECTORIES
+
+Stat structure on NetBSD
+
+           Type        Entry        Description
+           dev_t       st_dev       device ID containing the file
+           ino_t       st_ino       serial number of the file (inode number)
+           mode_t      st_mode      mode of the file
+           nlink_t     st_nlink     number of hard links to the file
+           uid_t       st_uid       user ID of the owner
+           gid_t       st_gid       group ID of the owner
+           dev_t       st_rdev      device type (character or block special)
+           off_t       st_size      size of the file in bytes
+           time_t      st_atime     time of last access
+           time_t      st_mtime     time of last data modification
+
+
+More types of files-
+
+1) Block special file - provides buffered I/O of disk blocks of a fixed size
+2) Character special file - provides unbuffered I/O of various size units to devices. All devices are either block special files or character special files
+3) FIFO file - names pipe between two processes for communication
+4) Socket - network communication between ports
+5) Symbolic link - linked to another file (points to)
+
+IPC objects are also represented as files like Message queues, semaphores and shared memory objects.
+
+USER IDS
+
+There are atleast 6 ID's associated with each process
+1) real user ID
+2) real group ID
+3) effective UID
+4) effective GID
+5) supplementary GID
+6) saved set-user-ID
+7) saved set-group-ID
+
+1) and 2) are gathered from the passwd file when we log in. These can be changed by superusers (user ID = 0). The saved IDs are just copies of the effective user IDs and group IDs.
+
+When we execute a file the effective user ID is the real user ID and real group ID. We can force the file to be opened as the owner of that file using the st_uid bit in st_mode and the file owner's group using the st_gid called the set_user_ID bit and the set_group_id-bit. In this way if the bit is set and the file belongs to the user, it will always be executed as the superuser regardless of the real user ID (eg passwd(1)).
+
+PERMISSIONS
+
+When executing a file we need to have the permissions for all the directories leading up to the file + the file itself. When opening a file
+Check user permissions -> check group permissions -> check other permissions
+
+NEW FILES
+When a new file is created it is assigned the current effective user-ID and the group id can be the effective group ID or the group ID of the directory the file is created in (specified when creating the file)
+
+On macosx, using the mkfile -n 555 yo.txt command, a file yo is created with rw permissions for the real/effective user. Touch on the other hand declares read permissions for the user,group and other.
+
+UMASK
+It is used to set the file mode creation mask. (no error return). Run the umask function and then run creat to create a file using the newly defined mask. umask command line
+002 -> to prevent others from writing to the file
+000 000 010
+022 -> to prevent group members and others from writing to the file
+000 010 010
+
+So to stop everyone from executing,
+000 001 001 (011)
+
+STICKYBIT
+
+S_ISVTX bit. Initial systems would store a copy of the program's text in the swap space (contiguous memory locations) making memory access faster. ISVTX - save text. In modern systems if this bit is set for a directory, a file in a directory can ve removed or renamed only if the user has write permission for the directory and either
+1) owns the file
+2) Owns the directory
+3) Is the superuser
+
+
+A file contents can only be deleted when the link count is 0. Is there a way to check if the file has been deleted completely?
+
+When you use creat or open, the unlink command is also executed so that when the program terminates, any temp files are deleted.

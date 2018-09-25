@@ -1,11 +1,13 @@
-FIRST WEEK NOTES -*- mode:org -*-
+
+#+TITLE: FIRST WEEK NOTES
 * LINUX DIRECTORIES
 ** /dev/null can be used to suppress output if we do not want to see it on stdout
 - stdin -0, stdout-1, stderr - 2
 - Thats when you use the syntax ./blah > /dev/null 2>&1
 
 ** 
-* [3/4] TODO reading
+
+* [3/5] TODO reading
 - [ ] Read the 1st 3 chapters of the Stevens book
 - [X] Start your Git repository
 - [X] Post a question to the mailing list to judge involvement
