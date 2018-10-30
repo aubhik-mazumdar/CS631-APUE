@@ -1,0 +1,146 @@
+DESCRIPTION
+------------------------------------------------------------------------------------
+This program implements the ls command in C which lists information of entries
+in the file structure
+
+PROGRAM STRUCTURE
+------------------------------------------------------------------------------------
+ls.c -> parse arguments, traverse file system, create linked list, call print
+ls.h -> definition of opts_holder, ll (linked list) structures
+print_function.c -> print details based on entries in ll
+print_function.h -> function signature for print_function.c
+cmp.c -> Different compare functions used for sorting and printing
+cmp.h -> function signatures for the compare functions
+Makefile -> compile program with -g option for debugging
+checklist -> checklist for proper programming
+
+
+
+MAIN COMPONENTS APPLIED
+------------------------------------------------------------------------------------
++ getopt(3) - Parses arguments from command line. Used for setting options for ls
+
++ fts(3) - Traverses the file system and returns FTSENT structures to operate on. 
+        these structures contain the stat info, paths, names and other info
+        about the files. Multiple flags can be passed to FTS. I have used-
+        - FTS_NOCHDIR - performance optimization that doesnt change directory 
+                        while traversing the file system
+        
+        - FTS_PHYSICAL - get information of the symlink instead of the target of
+                         of the symlink
+        
+        - FTS_SEEDOT - forces the '.' and '..' entries to be visited and 'seen'.
+                       Used with the -a and -A options.
+
+        - FTS_WHITEOUT - whiteout entries are also returned when traversing
+
+The steps in FTS first require you to read or open the directory (setting the
+root level). The level is used to ensure a breadth first traversal rather than a
+depth-first traversal. The steps followed are
+        - fts_open - opens the directory for reading its entries. Returns an FTS
+                     struct pointer.
+        
+        - fts_read - reads the directory to get the files in the directory.
+
+        - fts_children - after calling read, fts_children can also be called to fetch 
+                         contents of the directory
+
++ stat(2) - Returns information of the file including the mode, inode number, size,
+            number of blocks, times and user/group ids. i have also used it to check
+            whether a file exists.
+
++ strmode(3) - convert mode_t from stat structure to printable string with -l and -n
+               It does not have an error return to check so ignoring it with (void).
+               The buffer must be large enough to contain the string (12 is optimal).
+
++ readlink(2) - Used to follow symlinks to get the path of the target. The returned
+             string is not null terminated and hence a '\0' is added before printing.
+
++ getpwuid(3) - Gets password entry from the /etc/passwd file
+
++ getgruid(3) - Gets group entry from the etc/group file.
+
++ humanize_number(3)- Converts a number into human readable format with the proper
+                      suffix. Flags are passed to specify the scale and the format
+                      of the returned string.
+
++ getbsize(3) - Gets the set blocksize from the environment. The user may change the
+                blocksize before running the program and so our program must reflect
+                this. If the blocksize is unreasonable for eg 'bacon' it returns a
+                warning message automatically and uses the default of 512.
+
++ isprint(3) - Checks for a non-printable character
+
++ isatty(3) - Checks if the stdout=1 is a terminal device and sets the appropriate
+              flags
+
+
+IMPLEMENTATION DETAILS
+-------------------------------------------------------------------------------------
+
+I have created a linked list that contains all the FTSENT structures that need to be
+printed out. This linked list is passed to the print_function for printing. 
+
+While going through the FTSENT structures, the maximize function is called to
+determine the maximum length of the string for the fields and stored in an array.
+- max[0] -> maximum length of userID
+- max[1] -> maximum length of groupID
+- max[2] -> maximum length of string for bytes
+- max[3] -> total file blocks
+- max[4] -> maximum length of string for number of blocks (individual)
+
+start_scan handles the arguments that are passed. If a single file is passed, if a 
+directory is passed and if there are multiple command line arguments.
+
+ISSUES
+-------------------------------------------------------------------------------------
+1)  The file_system must be closed after calling the print_function as the FTSENT * 
+    structures may be overwritten. This was causing a segfault when certain files
+    were being read. The stat information was not present in the FTSENT structure.
+    I have added a check for this. If the stat information is not available from 
+    the FTSENT structure, use stat to get the relevant information for the file.
+
+2)  Humanize number expects the HN_DECIMAL option to be set to return the value 
+    in the format of the actual 'ls' program.
+
+3)  Recursive traversal was generating a segfault when the linked list was not being
+    deleted after every traversal. The delete_list function does exactly this.
+
+4)  Reading the targets of symlinks using readlink expects the entire path to the 
+    file and not just the name. I thus had to construct the path using the fts_accpath
+    information for the FTSENT structure in question and the fts_name value.
+
+5)  The blocksize can be changed and so the number of blocks were first multiplied
+    by the default blocksize first and then divided by the new blocksize to get the
+    correct total value. (-l and -n option)
+
+6)  For non-printable characters the isprint function is used to determine if the 
+    character can be printed or not. If it cannot a '?' is printed by default
+
+7)  For the total values printed with -l, if -h is specified, add the file sizes
+    not the blocks.
+
+8)  If multiple directories are specified on the command line, they must be evaluated in
+    reverse order. I have used an array that acts like a stack to achieve this.
+
+
+ABOUT THE OPTIONS
+-------------------------------------------------------------------------------------
+The following options are not supported in this implementation
+-C -> multi-column output
+-x -> Multi column output row-wise
+
+Everything else is supported to the best of my knowledge.
+
+
+
+
+
+
+
+
+
+
+
+
+

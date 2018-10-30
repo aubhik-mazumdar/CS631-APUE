@@ -1,0 +1,113 @@
+commit 24f2c256bf2d92b6bcd6527d7752a8e35acd4607
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Mon Oct 15 03:59:12 2018 +0000
+
+    Finished
+
+commit 89ed21d01d4f42e9c7e5bf5ee0a3a1b2c8436626
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Mon Oct 15 01:32:28 2018 +0000
+
+    Finished. Added time format from TZ environment variable.
+
+commit efb33f78446437022b8ae3ec8e3b4869d3f806b4
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Sun Oct 14 23:59:23 2018 +0000
+
+    Comparison functions completed. Extra credit to be attempted
+
+commit 89291f515bb7dfb9c6d62cd355e128dda41864b1
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Sun Oct 14 21:32:04 2018 +0000
+
+    Almost finished. Add the compares and the check for strange dates.
+
+commit d99401d2680c46960f480ad418ba44edc26f6f39
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Fri Oct 12 14:17:13 2018 +0000
+
+    recursive option working now. Add all flags next.
+
+commit 2909cf3c7971019937f263e11ea23d7353153dfb
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Fri Oct 12 12:06:54 2018 +0000
+
+    Recursion working but not going level by level
+
+commit 43c72c37725845349003b11fc45432c08f8ff349
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Fri Oct 12 10:32:20 2018 +0000
+
+    Fixed options (overlapping)
+
+commit 2845c3b037c6194c9611c4456d21e93b391fa1c3
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Fri Oct 12 09:26:30 2018 +0000
+
+    Fixed segfault occuring with only -l
+
+commit cd01d8d9bec2e257d844b91975d2046bdc3ad2c5
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Thu Oct 11 22:38:19 2018 +0000
+
+    long print with linked list finished, move onto alignment of print using padding attained through the maximize function
+
+commit f15bf299ab0bb7ec5c17d4f8749646dd3088992b
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Wed Oct 10 04:42:02 2018 +0000
+
+    Started linked list for all files and calculated the max file size, max user name length, max group name length and max bytes for padding during thee -l option. Modify all print functions next.
+
+commit 73550dc132613ce600eae4778dd48e448b7f4bde
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Wed Oct 10 02:34:01 2018 +0000
+
+    Finished -F option
+
+commit 31db501687955241a906530bdf0a97055219216d
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Sat Oct 6 01:52:17 2018 +0000
+
+    long format done. Fix human readable tomorrow
+
+commit b9cbd8f3bd3b29ad6b7b3c0333dfaa072002f2e7
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Sat Oct 6 00:57:46 2018 +0000
+
+    more long format stuff done. TODO dates
+
+commit 59af3b7697a0502c19d00a2b2bacdbc2ef54e646
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Fri Oct 5 20:55:29 2018 +0000
+
+    passing file to ls working
+
+commit b50b27e0f2a7066f6376cea3a845b30739673072
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Thu Oct 4 23:58:32 2018 +0000
+
+    -l option partly working
+
+commit 92f42b4d58fda47dec6113374c08b1e1420eec75
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Mon Oct 1 20:46:54 2018 +0000
+
+    removed dummy directory dd;
+
+commit e0aa8aa608e121f8496d7832262cb339e4f04cc7
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Mon Oct 1 20:39:06 2018 +0000
+
+    -a option working correctly now. Output matches ls -a1 for all cases.
+
+commit 3fe200d06e8d5128b46c98490e3fde7dce4722ed
+Author: aubhik-mazumdar <aubhik.mazumdar@gmail.com>
+Date:   Mon Oct 1 18:45:59 2018 +0000
+
+    -a option
+
+commit 72eeb919c7176e1cb6584ddd3ea4c5b4b6874283
+Author: aubhik-mazumdar <amazumda@stevens.edu>
+Date:   Mon Oct 1 15:51:32 2018 +0000
+
+    first commit
