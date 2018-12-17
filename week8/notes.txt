@@ -1,0 +1,32 @@
+QUESTIONS
+- if getpwuid() returns NULL, what can we check for error?
+- What if the username is too long?
+    - max in netbsd is tryingtocreateau (16 chars)
+
+NOTES
+- fork,exec - new process created
+- text segment - intialized variables
+- function you call gets added to the stack
+- uninitialized data - arrays
+- recursive calls lead to a stack overflow
+- pmap(1) and pmap(9) TRY!
+- readelf -h a.out -> ELF file
+- libc_start_main is the routine for starting main()
+- cc -e specify entry point
+- If no explicit return is specified, return is the last return value
+eg printf("yo\n") returns 3
+- You can also overflow the stack by modifying the environment variables - environ
+- _exit and _Exit also exist
+- abort() exits by sending a signal to the process
+- if envp gets too big, it is dynamically allocated in the heap
+- realloc -> change the region size
+- alloca - allocate the memory to the stack so that you dont lose the mallocs region after the function call
+- reservation and keeping track of memory region is a black box
+- cc -static h -> static linking, not dynamic linking
+- MAC OSX does not allow dynamic linking
+- getrlimit and setrlimit for modifying the process limits
+- soft limit <= hard_limit
+- ps wwaux | more -> view all the processes
+- Zombie process - dead process that has not been reaped by init
+- init usually reaps all the dead processes
+

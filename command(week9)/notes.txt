@@ -1,0 +1,27 @@
+- AFter init forks, the rest of the processes are just started using exec
+- PIPE causes a fork
+- On exiting, init will reap the process
+- Init read etc/ttys
+- getty(8) - opens terminal and login
+- login(1) - validates login + checks other users
+- A database is kept for the currectly logged in users
+- All of these programs above run as superuser
+- Each process has a unique groupID
+- leader - groupID = pid
+- Kernel has the process table so the user cannot access it
+- /bin/sleep and sleep() are different
+- background processes also have control of a terminal
+- signal - basic of IPC
+- when you resize the terminal  asignal is sent to the programs
+- There are some signals you can catch
+- read about returning function pointers as well
+- exec reintializes signals
+- fork inherits signal status from the parent
+- it is not safe to use signal() in a signal handler
+- You can block signals after you unblock
+- Some signals may restore the operation or return back + 1 line
+- Experiments with eintr.c
+- Reentrant function is afunction that gives the same results everytime
+- In a signal handler, only use functions that are reentrant
+- Best way to restart a daemon is to send it a signal
+- Since Daemons are run in the background, you cannot get the control of a terminal

@@ -1,0 +1,21 @@
+QUESTIONS
+Why is ls a fork + exec?
+Does SIGTTOU also suspend stderr messages?
+
+IPC
+- Asynchronous in nature
+- Semaphore is basically a counter
+- Identifier and key uniquely identifies a synchronization structure
+- terminating a process frees the lock
+- Data Structure still exists after the termination of the process. Semaphore also still exists
+ipcs -p
+ipcs -s
+
+- Very similar to file I/O
+- The semaphore crosses the boundary between the kernel and the process multiple times
+- Shared memory, you dont need to cross the boundary multiple times. It resides in user space
+- Shared memory is the fastest form of IPC
+- Access issues though
+- Information is stored in there and persists
+- Message queues deliver messages in order
+

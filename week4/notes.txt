@@ -1,0 +1,21 @@
+- To run ls you need execute permissions on the directory
+- opendir doesnt need execute permissions but open does
+- permissions changes take effect immediately but if the handle is open it doesnt matter
+- Every directory has a minimum of 2 hard links
+- Root directory has parent = itself
+- rmdir . or .. is prevented by the file system
+- there is not rm system call and only unlink
+- there is no mv system call only rename
+- readlink is used for reading the contents of a sylink file
+- ls -lu -> last access time
+- use fts
+- cd doesnt exist...its a shell builtin
+- To be POSIX compliant, you need to have a cd binary in /usr/bin but cd is in the shell
+
+
+PASSWORDS AND GROUPS
+- You can have 2 users with the same uid but different uname
+- You can be a part of 2 groups. Each group has a password. Primary group is in /etc/passwd rest are in /etc/group
+- uname in cmdline can lie to you (you can set it) but the command in C will not
+- time.h /usr/include/time.h for time_t struct (look at it)
+
